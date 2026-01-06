@@ -2,5 +2,38 @@
 name = "vir-rs"
 version = "0.1.0"
 edition = "2024"
+license = "CC0-1.0"
+description = "Canonical Rust reference implementation of The Great Silicon Filter (VIR)"
+repository = "https://github.com/so-sai/vir-rs"
+readme = "README.md"
 
 [dependencies]
+# Supply Chain Hardening: Pinned versions (=)
+blake3 = "=1.5.0"
+ed25519-dalek = { version = "=2.1.0", features = ["zeroize"] }
+zeroize = { version = "=1.7.0", features = ["derive"] }
+thiserror = "=1.0.50"
+
+[dev-dependencies]
+trybuild = "1.0"
+proptest = "1.4"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+lto = true
+codegen-units = 1
+strip = "symbols"
+
+# Rust 2024 Lints Configuration
+[lints.rust]
+unsafe_code = "forbid"
+warnings = "deny"
+missing_docs = "deny"
+
+[lints.clippy]
+all = "deny"
+unwrap_used = "deny"
+expect_used = "deny"
